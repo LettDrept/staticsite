@@ -9,7 +9,7 @@ class TextType(Enum):               # Establishes the standard types of text for
     IMAGE = "image"
     
 class TextNode():
-    def __init__(self, text, text_type, url=None):          # Url defaults to None if nothing is passed in
+    def __init__(self, text, text_type, url=None):          # url defaults to None if nothing is passed in
         self.text = text
         self.text_type = text_type
         self.url = url
