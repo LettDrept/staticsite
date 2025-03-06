@@ -1,20 +1,20 @@
 import unittest                                                     # Imports for testing
-                                                                    # "test_" necessary for unittest to find
+                                                                    # "test_" function name necessary for unittest to find
 from textnode import TextNode, TextType                             # Needed for testing
 
 
 class TestTextNode(unittest.TestCase):
-    def test_eq(self):
-        node = TextNode("This is a text node", TextType.BOLD)
-        node2 = TextNode("This is a text node", TextType.BOLD)
+    def test_equal(self):
+        node = TextNode("Test me", TextType.ITALIC)
+        node2 = TextNode("Test me", TextType.ITALIC)
         self.assertEqual(node, node2)
 
-    def test_eq_false(self):
-        node = TextNode("This is a text node", TextType.TEXT)
-        node2 = TextNode("This is a text node", TextType.BOLD)
+    def test_unequal_format(self):
+        node = TextNode("Test me", TextType.ITALIC)
+        node2 = TextNode("Test me", TextType.BOLD)
         self.assertNotEqual(node, node2)
 
-    def test_eq_false2(self):
+    def test_unequal_text(self):
         node = TextNode("This is a text node", TextType.TEXT)
         node2 = TextNode("This is a text node2", TextType.TEXT)
         self.assertNotEqual(node, node2)
