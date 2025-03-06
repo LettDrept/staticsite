@@ -16,12 +16,12 @@ class TestTextNode(unittest.TestCase):
 
     def test_unequal_text(self):
         node = TextNode("Test me", TextType.TEXT)
-        node2 = TextNode("Test me", TextType.TEXT)
+        node2 = TextNode("Text me", TextType.TEXT)
         self.assertNotEqual(node, node2)
 
     def test_equal_url(self):
         node = TextNode("Test me", TextType.ITALIC, "https://www.boot.dev")
-        node2 = TextNode("Text me", TextType.ITALIC, "https://www.boot.dev")
+        node2 = TextNode("Test me", TextType.ITALIC, "https://www.boot.dev")
         self.assertEqual(node, node2)
 
     def test_repr(self):
