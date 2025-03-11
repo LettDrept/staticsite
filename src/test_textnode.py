@@ -3,7 +3,7 @@ import unittest                                                     # Imports fo
 from textnode import TextNode, TextType                             # Needed for testing
 
 
-class TestTextNode(unittest.TestCase):
+class TestTextNode(unittest.TestCase):                      
     def test_equal(self):
         node = TextNode("Test me", TextType.ITALIC)
         node2 = TextNode("Test me", TextType.ITALIC)
