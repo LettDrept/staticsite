@@ -48,7 +48,7 @@ class ParentNode(HTMLNode):
         if self.children == None:
             raise ValueError("invalid HTML: no children")
         children_html = ""
-        for child in self.children:
+        for child in self.children:                         # Should recurse through all levels
             children_html += child.to_html()
         return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
 
