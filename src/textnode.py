@@ -1,5 +1,6 @@
 from enum import Enum               # Allows for use of Enum-type variables
 from htmlnode import HTMLNode, LeafNode
+import re
 
 class TextType(Enum):               # Establishes the standard types of text for this site
     TEXT = "text"
@@ -68,3 +69,11 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):     # Converts raw m
         new_nodes.extend(temp_nodes)       
     
     return new_nodes
+
+# Regex functions on provided markdown text
+
+def extract_markdown_images(text):                      
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    
+def extract_markdown_links(text):                      
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
