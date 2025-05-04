@@ -3,6 +3,8 @@ import re
 from textnode import TextNode, TextType
 
 
+# Functions for generating TextNodes from inline markdowns
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for old_node in old_nodes:
@@ -27,7 +29,6 @@ def extract_markdown_images(text):
     pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
     matches = re.findall(pattern, text)
     return matches
-
 
 def extract_markdown_links(text):
     pattern = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
@@ -98,7 +99,6 @@ def split_nodes_link(old_nodes):        # Identical to split_nodes_image, but fo
             new_nodes.append(TextNode(remaining_text, TextType.TEXT))    
     
     return new_nodes
-
 
 # Function to consolidate the splitting functions
 

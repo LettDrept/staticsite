@@ -3,7 +3,7 @@ class HTMLNode():
         self.tag = tag                          # String of the HTML tag
         self.value = value                      # String of the tag's contents
         self.children = children                # list of objects representing the node's children
-        self.props = props                      # dict of k-v attributes of the HTML tag
+        self.props = props                      # dict of key-value attributes of the HTML tag
 
     def to_html(self):
         raise NotImplementedError("to_html method not implemented")

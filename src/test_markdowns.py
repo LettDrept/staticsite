@@ -14,10 +14,6 @@ class TestMarkdowns(unittest.TestCase):
     
     # Test Split Delimiter
 
- #   def test_delimiter(self):  # Not properly raising the Exception
-  #      node = [TextNode("This is a text node", TextType.TEXT)]
-   #     self.assertRaises(Exception, lambda: split_nodes_delimiter(node, "*", TextType.TEXT)) 
-
     def test_not_TEXT(self):
         node = [TextNode("This is a bold node", TextType.BOLD)]
         node2 = [TextNode("This is a text node", TextType.TEXT)]
@@ -264,6 +260,7 @@ class TestMarkdowns(unittest.TestCase):
             ],
             new_nodes,
         )
+
 
 
 if __name__ == "__main__":
