@@ -66,7 +66,7 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This is an image node", TextType.IMAGE, "https://www.google.com")
         html_node = text_node_to_html_node(node)     
         self.assertEqual(html_node.tag, "img")
-        self.assertEqual(html_node.to_html(), '<img src="https://www.google.com" alt="This is an image node">')
+        self.assertEqual(html_node.to_html(), '<img src="https://www.google.com" alt="This is an image node"></img>')
 
 
 
