@@ -130,3 +130,11 @@ def text_to_children(text):
         html_node = text_node_to_html_node(text_node)
         children.append(html_node)
     return children
+
+def extract_title(markdown):
+    lines = markdown.split("\n")
+    for line in lines:
+        if line.startswith("#") and not line.startswith("##"):
+            # Remove the # and any leading whitespace
+            return line[1:].strip()
+    raise Exception("No title found in markdown")

@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_blocks import BlockType, markdown_to_blocks, block_to_blocktype, markdown_to_html_node
+from markdown_blocks import BlockType, markdown_to_blocks, block_to_blocktype, markdown_to_html_node, extract_title
 from htmlnode import HTMLNode
 
 class TestMarkdownBlocks(unittest.TestCase):
@@ -203,7 +203,6 @@ class TestMarkdownBlocks(unittest.TestCase):
         md = "This is a paragraph with **bold** and _italic_ text."
         html_node = markdown_to_html_node(md)
         html = html_node.to_html()
-        print(html)
         self.assertEqual("<div><p>This is a paragraph with <b>bold</b> and <i>italic</i> text.</p></div>", html)
 
     def test_markdown_to_html_node_paragraph2(self):
@@ -220,6 +219,25 @@ class TestMarkdownBlocks(unittest.TestCase):
         html_node = markdown_to_html_node(md)
         html = html_node.to_html()
         self.assertEqual("<div><p>This is a paragraph with <b>bold</b> and <i>italic</i> text. This is another paragraph.</p></div>", html)
+
+    def test_extract_title(self):
+        md = "# This is a title\n\nThis is a paragraph."
+        title = extract_title(md)
+        self.assertEqual("This is a title", title)
+
+    def test_extract_title_no_title(self):
+        md = "This is a paragraph."
+        self.assertRaises(Exception, extract_title, md, msg="No title found in markdown")    # Don't () the function, just pass it in
+
+    def test_extract_title_2(self):
+        md = "# This is a title\n\nThis is a paragraph.\n\n# Another title"
+        title = extract_title(md)
+        self.assertEqual("This is a title", title)
+    
+    def test_extract_title_3(self):
+        md = "## This is a title\n\nThis is a paragraph.\n\n# Another title\n\n# Yet another title"
+        title = extract_title(md)
+        self.assertEqual("Another title", title)
 
 if __name__ == "__main__":
     unittest.main()
