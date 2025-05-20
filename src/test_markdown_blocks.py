@@ -188,10 +188,10 @@ class TestMarkdownBlocks(unittest.TestCase):
         self.assertEqual("<div><blockquote>This is a quote\nThis is another quote</blockquote></div>", html)
 
     def test_markdown_to_html_node_unordered_list(self):
-        md = "- This is an unordered list\n- This is another item"
+        md = "- This is an _un ordered_ list\n- This is another item"
         html_node = markdown_to_html_node(md)
         html = html_node.to_html()
-        self.assertEqual("<div><ul><li>This is an unordered list</li><li>This is another item</li></ul></div>", html)
+        self.assertEqual("<div><ul><li>This is an <i>un ordered</i> list</li><li>This is another item</li></ul></div>", html)
 
     def test_markdown_to_html_node_ordered_list(self):
         md = "1. This is an ordered list\n2. This is another item"

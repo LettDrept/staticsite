@@ -11,22 +11,13 @@ def generate_page(from_path, template_path, dest_path):
         template_path (str): Path to the template file.
         dest_path (str): Path to the destination file.
     """
-    print(f"Current working directory: {os.getcwd()}")
-    print(f"Full path to content file: {os.path.abspath(from_path)}")
-    print(f"Does content file exist? {os.path.isfile(from_path)}")
-    print(f"Full path to template file: {os.path.abspath(template_path)}")
-    print(f"Does template file exist? {os.path.isfile(template_path)}")
+    print(f"Absolute paths:")
+    print(f"From: {os.path.abspath(from_path)}")
+    print(f"Template: {os.path.abspath(template_path)}")
+    print(f"Destination: {os.path.abspath(dest_path)}")
 
-    file_stats = os.stat(from_path)
-    print(f"File permissions: {stat.filemode(file_stats.st_mode)}")
-    print(f"File size: {os.path.getsize('../content/index.md')} bytes")
-    
     if os.path.isfile(from_path) and os.path.isfile(template_path):
-        print(f"Generating page from {from_path} to {dest_path} using template {template_path}")
-        
-        with open(template_path, "r") as template_file:
-            template = template_file.read()
-        
+        print(f"Generating page from {from_path} to {dest_path} using template {template_path}")       
         print(f"Attempting to read file from: {from_path}")
         try:
             with open(from_path, "r") as source_file:
@@ -35,24 +26,26 @@ def generate_page(from_path, template_path, dest_path):
         except Exception as e:
             print(f"Error reading file: {e}")
         
-
-
+        content_title = extract_title(content)
         content_node = markdown_to_html_node(content)
-
         content_html = content_node.to_html()
-
-        content_title = extract_title(content_html)
+       
 
     # Replace placeholders in the template with actual content
-        page_title = template.replace("{{title}}", content_title)
-        page_content = template.replace("{{content}}", content_html)
+        with open(template_path, "r") as template_file:
+            template = template_file.read()        
+        new_page = template.replace("{{ Title }}", content_title)
+        new_page = new_page.replace("{{ Content }}", content_html)
 
     # Write the generated page to the destination path
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
-        with open(dest_path, "w") as dest_file:
-            dest_file.write(page_title)
-            dest_file.write(page_content)
-
+        try:
+            with open(dest_path, "w") as dest_file:
+                dest_file.write(new_page)
+            print(f"Successfully wrote page to {dest_path}")
+        except Exception as e:
+            print(f"Error writing file to {dest_path}: {e}")
+   
     else:
         print(f"Source file {from_path} or template file {template_path} does not exist.")
         return

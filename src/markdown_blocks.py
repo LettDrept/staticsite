@@ -102,8 +102,11 @@ def quote_to_html_node(block):
 
 def unordered_list_to_html_node(block):
     items = [item[2:].strip() for item in block.split("\n") if item]
-    children = [HTMLNode("li", item) for item in items]
-    return HTMLNode("ul", None, children)
+    content = []
+    for item in items:
+        children = text_to_children(item)
+        content.append(ParentNode("li", children))
+    return HTMLNode("ul", None, content)
 
 def ordered_list_to_html_node(block):
     items = block.split("\n")
@@ -111,11 +114,12 @@ def ordered_list_to_html_node(block):
     for item in items:
         match = re.search(r"\d+\.\s", item)
         if match:
-            content.append(item[match.end():].strip())
+            item = item[match.end():].strip()
         else:
             raise ValueError("Invalid ordered list item format")
-    children = [HTMLNode("li", item) for item in content]
-    return HTMLNode("ol", None, children)
+        children = text_to_children(item)
+        content.append(ParentNode("li", children))
+    return HTMLNode("ol", None, content)
 
 def paragraph_to_html_node(block):
     content = block.strip("\n")
