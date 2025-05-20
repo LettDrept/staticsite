@@ -2,7 +2,7 @@ import os
 import shutil
 
 from copystaticdir import copy_files_recursive
-from generatepage import generate_page
+from generatepage import generate_page, generate_pages_recursive
 
 def main():
 # Get the directory containing your script
@@ -12,7 +12,7 @@ def main():
     base_dir = os.path.dirname(script_dir)  # or just script_dir if main.py is at the root
     
 # Construct absolute paths
-    content_path = os.path.join(base_dir, "content", "index.md")
+    content_path = os.path.join(base_dir, "content")   # Needed "index.md" for only one page
     template_path = os.path.join(base_dir, "template.html")
     public_dir = os.path.join(base_dir, "public")
     public_index_path = os.path.join(public_dir, "index.html")
@@ -39,7 +39,10 @@ def main():
         print(f"Copied static files from {static_dir} to {public_dir}")
     
 # Generate page
-    generate_page(content_path, template_path, public_index_path)
+   # generate_page(content_path, template_path, public_index_path)
+
+# Generate pages recursively
+    generate_pages_recursive(content_path, template_path, public_dir)
 
 if __name__ == "__main__":
     main()   

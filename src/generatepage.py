@@ -28,8 +28,7 @@ def generate_page(from_path, template_path, dest_path):
         
         content_title = extract_title(content)
         content_node = markdown_to_html_node(content)
-        content_html = content_node.to_html()
-       
+        content_html = content_node.to_html()      
 
     # Replace placeholders in the template with actual content
         with open(template_path, "r") as template_file:
@@ -48,10 +47,29 @@ def generate_page(from_path, template_path, dest_path):
    
     else:
         print(f"Source file {from_path} or template file {template_path} does not exist.")
+        return   
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    """
+    Recursively generates pages for all markdown files in a directory.
+    
+    Args:
+        dir_path_content (str): Path to the directory containing markdown files.
+        template_path (str): Path to the template file.
+        dest_dir_path (str): Path to the destination directory.
+    """
+    if not os.path.exists(dir_path_content):
+        print(f"Directory {dir_path_content} does not exist.")
         return
     
-
-
+    print(f"Generating pages recursively in {dir_path_content} using template {template_path} to {dest_dir_path}") 
+    for root, dirs, files in os.walk(dir_path_content):
+        for file in files:
+            if file.endswith(".md"):
+                from_path = os.path.join(root, file)
+                relative_path = os.path.relpath(from_path, dir_path_content)
+                dest_path = os.path.join(dest_dir_path, os.path.splitext(relative_path)[0] + ".html")
+                generate_page(from_path, template_path, dest_path)
 
 
 
