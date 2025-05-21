@@ -1,10 +1,20 @@
 import os
 import shutil
+import sys
 
 from copystaticdir import copy_files_recursive
 from generatepage import generate_page, generate_pages_recursive
 
 def main():
+# Check if a basepath is provided as a command line argument, otherwise uses "/" for the root
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
+    if basepath[-1] != "/":
+        basepath += "/"
+    print(f"Basepath: {basepath}")
+
 # Get the directory containing your script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
@@ -14,7 +24,10 @@ def main():
 # Construct absolute paths
     content_path = os.path.join(base_dir, "content")   # Needed "index.md" for only one page
     template_path = os.path.join(base_dir, "template.html")
-    public_dir = os.path.join(base_dir, "public")
+    if basepath == "/":
+        public_dir = os.path.join(base_dir, "public")
+    else:
+        public_dir = os.path.join(base_dir, "docs")
     public_index_path = os.path.join(public_dir, "index.html")
     static_dir = os.path.join(base_dir, "static")
     
@@ -39,10 +52,10 @@ def main():
         print(f"Copied static files from {static_dir} to {public_dir}")
     
 # Generate page
-   # generate_page(content_path, template_path, public_index_path)
+    generate_page(content_path, template_path, public_index_path, basepath)
 
 # Generate pages recursively
-    generate_pages_recursive(content_path, template_path, public_dir)
+    generate_pages_recursive(content_path, template_path, public_dir, basepath)
 
 if __name__ == "__main__":
     main()   
